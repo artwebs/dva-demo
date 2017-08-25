@@ -32,7 +32,7 @@ const App = connect(({count})=>({
 app.router(({history})=>{
   return (
      <Router history={history}>
-       <Route path="/ss" component={app} />
+       <Route path="/" component={app} />
      </Router>
   );
 });
