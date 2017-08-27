@@ -21,7 +21,7 @@ const App = connect(({count})=>({
 }))((props)=>{
   return (
     <div>
-      <h2>{ props.count}</h2>
+      <h2>{ props.count }</h2>
       <button key="add" onClick={()=>{props.dispatch({type:'count/add'});}}>+</button>
       <button key="minus" onClick={()=>{props.dispatch({type:'count/minus'});}}>-</button>
     </div>
@@ -29,10 +29,10 @@ const App = connect(({count})=>({
 });
 
 //4.Router
-app.router(({history})=>{
+app.router(({ history })=>{
   return (
      <Router history={history}>
-       <Route path="/" component={app} />
+       <Route path="/" component={App} />
      </Router>
   );
 });
