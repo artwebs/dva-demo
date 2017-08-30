@@ -1,12 +1,38 @@
 import React from 'react';
-import { Router, Route } from 'dva/router';
-import IndexPage from './routes/IndexPage';
+import { Router } from 'dva/router';
 
-function RouterConfig({ history }) {
+const cached = {};
+function registerModel(app, model) {
+  if (!cached[model.namespace]) {
+    app.model(model);
+    cached[model.namespace] = 1;
+  }
+}
+
+function RouterConfig({ history, app }) {
+  const routes = [
+    {
+      path: '/',
+      name: 'IndexPage',
+      getComponent(nextState, cb) {
+        require.entries([], (require) => {
+          cb(null, require('./routes/IndexPage'));
+        });
+      },
+    },
+    {
+      path: '/users',
+      name: 'UsersPage',
+      getComponent(nextState, cb) {
+        require.entries([], (require) => {
+          registerModel(app, require('./models/users'));
+          cb(null, require('./routes/Users'));
+        });
+      },
+    },
+  ];
   return (
-    <Router history={history}>
-      <Route path="/" component={IndexPage} />
-    </Router>
+    <Router history={history} routes={routes} />
   );
 }
 
