@@ -15,7 +15,7 @@ function RouterConfig({ history, app }) {
       path: '/',
       name: 'IndexPage',
       getComponent(nextState, cb) {
-        require.entries([], (require) => {
+        require.ensure([], (require) => {
           cb(null, require('./routes/IndexPage'));
         });
       },
@@ -24,16 +24,14 @@ function RouterConfig({ history, app }) {
       path: '/users',
       name: 'UsersPage',
       getComponent(nextState, cb) {
-        require.entries([], (require) => {
+        require.ensure([], (require) => {
           registerModel(app, require('./models/users'));
           cb(null, require('./routes/Users'));
         });
       },
     },
   ];
-  return (
-    <Router history={history} routes={routes} />
-  );
+  return <Router history={history} routes={routes} />;
 }
 
 export default RouterConfig;
